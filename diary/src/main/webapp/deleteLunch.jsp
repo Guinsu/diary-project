@@ -2,7 +2,7 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="java.net.URLEncoder"%>
 <%
-//인증 분기
+	//인증 분기
 	String sql1 = "SELECT my_session mySession FROM login";
 	Class.forName("org.mariadb.jdbc.Driver");
 	Connection conn = null;
@@ -29,8 +29,6 @@
 	
 		return; // 코드 진행을 끝내는 문법 ex) 메서드 끝낼 때 return 사용
 	}
-	
-	
 
 	String selectedMenu = request.getParameter("selectedMenu");
 	String checkDate = request.getParameter("checkedDate");

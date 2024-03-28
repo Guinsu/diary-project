@@ -226,7 +226,7 @@
 			<div id="emoji" >&#x1F4D3;</div>
 		</div>
 		<div class="flex-fill  text-center ">
-			<h1>오늘 먹을 메뉴 </h1>
+			<h1>오늘 먹을 점심 메뉴 </h1>
 		 </div>
 		<div class="d-flex flex-column justify-content-center align-items-center">
 			<div>
