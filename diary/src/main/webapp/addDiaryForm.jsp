@@ -102,9 +102,9 @@
 			width: 500px;
 		}
 		select{
-			width: 650px;
+			width: 200px;
+			margin-left: 40px;
 		}
-		
 		#emoji{
 			width:80px;
 			height:80px;
@@ -148,6 +148,13 @@
 		}
 		#title{
 			width: 650px;
+		}
+		#emotion{
+			font-size: 25px;
+		}
+		.inputType{
+			width: 50px;
+			height: 20px;
 		}
 	</style>
 </head >
@@ -217,14 +224,23 @@
 				<label>제목 : </label>
 				<input type="text" name="title" id="title" >
 			</div>
-			<div class="mb-2 d-flex justify-content-between" >
-				<label>날씨 : </label>
-				<select name="weather">
-					<option value="맑음">맑음</option>
-					<option value="흐림">흐림</option>
-					<option value="비">비</option>
-					<option value="눈">눈</option>
-				</select>
+			<div class="d-flex" >
+				<div class="p-2 flex-fill">
+					<label>날씨 : </label>
+					<select name="weather">
+						<option value="맑음">맑음</option>
+						<option value="흐림">흐림</option>
+						<option value="비">비</option>
+						<option value="눈">눈</option>
+					</select>
+				</div>
+				<div class="p-2 flex-fill" id="emotion">
+					<label>감정 : </label>
+					<input type="radio"  value="&#128538" name="emojis" class="inputType">&#128538
+					<input type="radio" value="&#128545" name="emojis"  class="inputType">&#128545
+					<input type="radio"  value="&#128557" name="emojis"  class="inputType">&#128557
+					<input type="radio"  value="&#128529" name="emojis" class="inputType">&#128529
+				</div>
 			</div>
 			<div class="mb-2 d-flex justify-content-between" >
 				<label class="">내용 : </label>

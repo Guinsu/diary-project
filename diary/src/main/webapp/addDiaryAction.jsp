@@ -5,14 +5,14 @@
 	String title = request.getParameter("title");
 	String weather =  request.getParameter("weather");
 	String content = request.getParameter("content");
-	
+	String feeling = request.getParameter("emojis"); 
 	//디버깅
 	//System.out.println(diaryDate);
 	//System.out.println(title);
 	//System.out.println(weather);
 	//System.out.println(content);
 	
-	String sql1 = "INSERT INTO diary (diary_date ,title, weather, content, update_date, create_date) VALUES (?,?,?,?,NOW(),NOW())";
+	String sql1 = "INSERT INTO diary (diary_date, feeling, title, weather, content, update_date, create_date) VALUES (?,?,?,?,?,NOW(),NOW())";
 	Class.forName("org.mariadb.jdbc.Driver");
 	Connection conn = null;
 	PreparedStatement stmt = null;
@@ -20,9 +20,10 @@
 	stmt =	conn.prepareStatement(sql1);
 	
 	stmt.setString(1, diaryDate);
-	stmt.setString(2, title);
-	stmt.setString(3, weather);
-	stmt.setString(4, content);
+	stmt.setString(2, feeling);
+	stmt.setString(3, title);
+	stmt.setString(4, weather);
+	stmt.setString(5, content);
 	
 	int row = 0;
 	
