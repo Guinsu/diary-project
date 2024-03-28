@@ -47,9 +47,9 @@
 	int row = stmt2.executeUpdate();
 	
 	if(row > 0){
-		response.sendRedirect("./statsLunch.jsp");
+		response.sendRedirect("./lunchOne.jsp");
 	}else{
-		response.sendRedirect("./diary.jsp");
+		response.sendRedirect("./lunchOne.jsp");
 	}
 	
 %>

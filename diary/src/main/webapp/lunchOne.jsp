@@ -2,7 +2,7 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="java.net.URLEncoder"%>
 <%
-	//인증 분기
+	//인증 분기 공통 
 	String sql1 = "SELECT my_session mySession FROM login";
 	Class.forName("org.mariadb.jdbc.Driver");
 	Connection conn = null;
@@ -29,10 +29,22 @@
 	
 		return; // 코드 진행을 끝내는 문법 ex) 메서드 끝낼 때 return 사용
 	}
-	
+
+	/*------------------------------------------------------------------------------------*/
 	
 	String checkDate = request.getParameter("checkDate");
-				
+	String menu = request.getParameter("menu");
+	String msg = null;
+	
+	if(checkDate == null){
+		checkDate = "";
+	}
+	
+	if(msg == null){
+		msg ="";
+	}
+	
+	// 선택된 날짜에 lunch_date, menu가 있는지 확인
 	String sql2 = "SELECT lunch_date, menu  FROM lunch WHERE lunch_date =?";
 	PreparedStatement stmt2 = null;
 	ResultSet rs2 = null;
@@ -40,39 +52,33 @@
 	stmt2.setString(1, checkDate);
 	rs2 = stmt2.executeQuery();
 
-	if(checkDate == null){
-		checkDate = "";
-	}
 	
-	String ck = request.getParameter("ck");
-	//System.out.println(ck);
-	if(ck == null){
-		ck="";
-	}
-	
-	String msg = "";
-	
-	String menu = request.getParameter("menu");
-	
-	//디버깅
-	//System.out.println(menu);
-	
-	if(menu != null){
+	// 선택한 메뉴 저장 (menu, ckeckDate가 null이 아닐 때만)
+	if(menu != null && checkDate != null){
 		String sql3 = "INSERT INTO lunch (lunch_date, menu, update_date, create_date) VALUES (?,?,NOW(),NOW())";
 		PreparedStatement stmt3 = null;
 		stmt3 =	conn.prepareStatement(sql3);
 		stmt3.setString(1, checkDate);
 		stmt3.setString(2, menu);
 		int row = stmt3.executeUpdate();
-		if(row > 0 ){
-			 response.sendRedirect("./lunchMenu.jsp?menu="+menu);
+		
+		if(row > 0 ){            
+			 response.sendRedirect("./lunchMenu.jsp?menu="+ URLEncoder.encode(menu, "utf-8") + "&checkDate="+ URLEncoder.encode(checkDate, "utf-8"));
 		}else{
 			 response.sendRedirect("./lunchOne.jsp");
 		}
+		
+		stmt3.close();
 	}
+	
+	//디버깅
+	//System.out.println(menu);
+	//System.out.println(checkDate);
 	
 	rs1.close();
 	stmt1.close();
+	rs2.close();
+	stmt2.close();
 	conn.close();
 %>
 <!DOCTYPE html>
@@ -120,6 +126,9 @@
 		select{
 			width: 200px;
 			margin-left: 40px;
+		}
+		form{
+			text-align: center;
 		}
 		#emoji{
 			width:80px;
@@ -178,9 +187,34 @@
 		#smallInput{
 			width: 430px;
 		}
+		#selectMenuBtn{
+			margin-top:  20px;
+			margin-bottom: 20px;
+		}
+		#menuDiv{
+			margin-top: 30px;
+			width: 100%;
+		}
+		#buttonDiv{
+			margin-top: 40px;
+			width: 300px;
+		}
+		#viewStatistics{
+			font-size: 30px;
+			text-decoration: none;
+			color:black;
+			border: 1px solid black;
+			padding: 3px;
+			background-color: #efebf2;
+		}
 		.inputType{
 			width: 50px;
 			height: 20px;
+		}
+		.selectMenuInput{
+			display: flex;
+			width: 100px;
+			height: 30px;
 		}
 	</style>
 </head>
@@ -204,59 +238,66 @@
 	</header>
 	
 	<aside>
-		<div  class="ms-5 d-flex">
-			<div id="checkDate" class="rounded-pill">
+		<div class="d-flex justify-content-center" >
+			<div id="checkDate" class=" rounded-pill" >
 				날짜 : <%=checkDate %>
-			</div>
-			<div id="ckecked" class="rounded-pill">
-				가능여부 : <%=msg %>	
 			</div>
 		</div>	
 			
 		<form action="/diary/lunchOne.jsp" method="post">
 			<div class="d-flex justify-content-center">
-				<div class="me-5">
+				<div class="ms-5 me-5">
 					<label class="me-3">메뉴 입력한 날짜 확인</label>
 					<input type="date" name="checkDate"  id="smallInput" >
 				</div>
-				<div>
+				<div id="buttonDiv">
 					<button type="submit">가능확인</button>
+					<a href="./diary.jsp"  id="viewStatistics" >뒤로가기</a>
 				</div>
-			</div>
-			<div class="mt-2 d-flex justify-content-center">
-				<div><%=msg%></div>
 			</div>
 		</form>
 	</aside>
 	
 	<main>
-			<%
-				if(checkDate != ""){
-					// 선택된 날짜에 메뉴가 없으면
-					if(!rs2.next()){
-						msg = "메뉴 선택이 가능한 날짜 입니다.";
-			%>
-						<form action="./lunchOne.jsp" method="post">
-							<input type="radio" name="menu"  value="중식">중식
-							<input type="radio" name="menu"  value="일식">일식
-							<input type="radio" name="menu" value="양식">양식
-							<input type="radio" name="menu" value="한식">한식	
-							<button type="submit">투표하기</button>					
-						</form>
-			<%
-					// 선택된 날짜에 메뉴가 있으면
-					}else{			
-			%>	
-						<form action="./deleteLunch.jsp" method="post">
-							<input type="hidden" name= "selectedMenu" value="<%=rs2.getString("menu")%>"> <%=rs2.getString("menu")%>
-							<input type="hidden" name= "checkedDate" value="<%=checkDate%>">
-							<button type="submit">삭제</button>
-						</form>							
-			<%
-						
-					}
+		<%
+			if(checkDate != ""){
+				// 선택된 날짜에 메뉴가 없으면
+				if(!rs2.next()){
+					msg = "메뉴 선택이 가능한 날짜 입니다.";
+		%>
+				<form action="./lunchOne.jsp" method="post" >
+					<div id="menuDiv" class="d-flex justify-content-center">
+						<input type="radio" name="menu"  value="중식" class="selectMenuInput">중식
+						<input type="radio" name="menu"  value="일식" class="selectMenuInput"> 일식
+						<input type="radio" name="menu" value="양식" class="selectMenuInput">양식
+						<input type="radio" name="menu" value="한식" class="selectMenuInput">한식
+						<input type="hidden" name="checkDate" value="<%=checkDate%>">
+					</div>
+					<div>
+						<button type="submit"  id="selectMenuBtn">투표하기</button>					
+					</div>
+				</form>
+		<%
+				// 선택된 날짜에 메뉴가 있으면
+			}else{
+				msg = "이미 선택된 메뉴가 있습니다.";
+		%>			
+				<form action="./deleteLunch.jsp" method="post">
+					<div  id="menuDiv" >
+						<input type="hidden" name= "selectedMenu" value="<%=rs2.getString("menu")%>"> <%=rs2.getString("menu")%>
+						<input type="hidden" name= "checkedDate" value="<%=checkDate%>">
+						<button type="submit" id="selectMenuBtn" class="ms-3">삭제하기</button>
+					</div>
+				</form>							
+		<%
 				}
-			%>
+			}
+		%>
+		<div class="d-flex justify-content-center">
+			<div>
+				<%=msg %>
+			</div>
+		 </div>
 	</main>
 </body>
 </html>

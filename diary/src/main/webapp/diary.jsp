@@ -205,8 +205,13 @@
 				<div>일기는 오늘을 위한 기록이 아니라, 내일을 위한 준비다.</div>
 				<div class="d-flex justify-content-center"> - 앤 프랭크</div>
 			</div>
-			<div class="p-2">
-				<a href="./diaryList.jsp" id="showList" class="btn btn-outline-dark">게시판처럼 보기 </a>
+			<div class="p-2 d-flex flex-column justify-content-center align-items-center">
+				<div>
+					<a href="./lunchOne.jsp" id="showList" class="mb-3 btn btn-outline-dark">점심 메뉴 고르기</a>
+				</div>
+				<div>
+					<a href="./diaryList.jsp" id="showList" class="btn btn-outline-dark">게시판처럼 보기 </a>
+				</div>
 			</div>
 		</div>
 		<div class="border p-2 flex-grow-1  border-black"  id="diaryDiv">
