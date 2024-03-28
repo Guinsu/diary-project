@@ -36,11 +36,12 @@
 		
 
 	String diaryDate =  request.getParameter("diaryDate");
+	String emojis =  request.getParameter("emojis");
 	String title = request.getParameter("title");
 	String weather =  request.getParameter("weather");
 	String content = request.getParameter("content");
 	
-	String sql2 = "UPDATE diary SET title= ?, weather= ?, content= ? WHERE diary_date = ?" ;
+	String sql2 = "UPDATE diary SET title= ?, weather= ?, feeling=?, content= ? WHERE diary_date = ?" ;
 	
 	PreparedStatement stmt2 = null;
 	ResultSet rs2 = null;
@@ -48,8 +49,9 @@
 	stmt2 = conn.prepareStatement(sql2);
 	stmt2.setString(1,  title);
 	stmt2.setString(2, weather);
-	stmt2.setString(3, content);
-	stmt2.setString(4, diaryDate);
+	stmt2.setString(3, emojis);
+	stmt2.setString(4, content);
+	stmt2.setString(5, diaryDate);
 	
 	//System.out.println(stmt2);
 	
@@ -60,7 +62,4 @@
 	}else{
 		response.sendRedirect("./updateDiaryForm.jsp?diaryDate="+diaryDate);
 	}
-	
-	
-
 %>

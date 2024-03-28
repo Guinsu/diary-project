@@ -105,8 +105,22 @@
 		main{
 			font-size: 35px;
 		}
+		input{
+			width: 400px;
+		}
 		h1{
 			font-size: 120px;
+		}
+		table {
+			width: 500px;
+		  	border: 1px solid black;
+		  	border-radius: 10px;
+		}
+		.btnGroup{
+			margin-right: 20px;
+			font-size: 30px;
+			border: 1px solid black;
+			border-radius: 10px;
 		}
 	</style>
 </head>
@@ -115,7 +129,7 @@
 		<h1 class="text-center" >일기 목록 </h1>
 	</header>
 	<main class="d-flex flex-column justify-content-center align-items-center" >
-		<table border = "1">
+		<table>
 			<tr>
 				<th>날짜</th>
 				<th>제목</th>
@@ -134,8 +148,8 @@
 			%>
 		</table>
 		
-		<div class="btn-group me-2" role="group" aria-label="Second group">
-			<button type="button" class="btn btn-secondary">
+		<div class="mt-3 btn-group me-2" role="group" aria-label="Second group"  >
+			<button type="button" class="btn btn-secondary btnGroup"  >
 				<%
 					if(currentPage > 1){
 				%>
@@ -148,22 +162,22 @@
 					}
 				%>
 			</button>
-			<button type="button" class="btn btn-secondary"><%=currentPage%></button>
-			<button type="button" class="btn btn-secondary">
+			<button type="button" class="btn btn-secondary btnGroup"><%=currentPage%></button>
+			<button type="button" class="btn btn-secondary btnGroup">
 				<%if(currentPage < lastPage ){
 				%>
 					<a href="./diaryList.jsp?currentPage=<%=currentPage +1%>">다음</a>		
 				<%
 				}else{
 				%>
-					<a style="color: grey; cursor: not-allowed; ">다음</a>
+					<a style="color: grey; cursor: not-allowed;  ">다음</a>
 				<%
 				}
 				%>
 			</button>
 		  </div>
 		
-		<form action="/diary/diaryList.jsp" method="get">
+		<form action="/diary/diaryList.jsp" method="get" class="mt-3">
 			<div>
 				제목검색 : 
 				<input type="text" name="searchWord">

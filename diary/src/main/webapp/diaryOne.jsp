@@ -39,7 +39,7 @@
 	
 	//디버깅
 	//System.out.println(diaryDate);
-	String sql2 = "SELECT diary_date, title, weather, content , update_date, create_date FROM diary WHERE diary_date =?";
+	String sql2 = "SELECT diary_date, feeling, title, weather, content , update_date, create_date FROM diary WHERE diary_date =?";
 	PreparedStatement stmt2 = null;
 	ResultSet rs2 = null;
 	stmt2 =	conn.prepareStatement(sql2);
@@ -117,11 +117,12 @@
 					<div>날씨 : <%=rs2.getString("weather")%></div>
 				</div>
 				<hr>
-				<div>
+				<div class='d-flex justify-content-between'>
 					 <div>제목 : <%=rs2.getString("title")%></div>
+					 <div>기분: <%=rs2.getString("feeling") %></div>
+				</div>
 					<hr>
 					 <div>내용 : <%=rs2.getString("content")%></div>
-				</div>
 				<hr>
 				<div  class='d-flex justify-content-between'>
 					<div>업데이트 날짜: <%=rs2.getString("update_date")%> </div>

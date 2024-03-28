@@ -37,7 +37,7 @@
 		
 	//디버깅
 	//System.out.println(diaryDate);
-	String sql2 = "SELECT diary_date, title, weather, content , update_date, create_date FROM diary WHERE diary_date =?";
+	String sql2 = "SELECT diary_date, feeling, title, weather, content , update_date, create_date FROM diary WHERE diary_date =?";
 	PreparedStatement stmt2 = null;
 	ResultSet rs2 = null;
 	stmt2 =	conn.prepareStatement(sql2);
@@ -91,7 +91,8 @@
 			width: 500px;
 		}
 		select{
-			width: 650px;
+			width: 200px;
+			margin-left: 40px;
 		}
 		
 		#emoji{
@@ -138,6 +139,26 @@
 		#title{
 			width: 650px;
 		}
+		#emoji{
+			width:80px;
+			height:80px;
+			font-size: 70px;
+		}
+		.inputType{
+			width: 40px;
+			height: 20px;
+		}#backDiaryAtag{
+			margin-left :50px;
+			margin-top: 4px;
+			width: 325px;
+			height: 50px;
+			padding-right:50px;
+			padding-left: 50px;
+			border: 1px solid black;
+			border-radius: 5px;
+			text-align: center;
+			font-size: 30px;
+		}
 	</style>
 </head >
 <body  class="d-flex flex-column justify-content-center align-items-center">
@@ -163,22 +184,32 @@
 					<label>제목 : </label>
 					<input type="text" name="title" id="title"  value="<%=rs2.getString("title") %>">
 				</div>
-				<div class="mb-2 d-flex justify-content-between" >
-					<label>날씨 : </label>
-					<select name="weather" ">
-						<option value="맑음" <%=rs2.getString("weather").equals("맑음") ?  "selected" : "" %>>맑음</option>
-						<option value="흐림" <%=rs2.getString("weather").equals("흐림") ?  "selected" : "" %>>흐림</option>
-						<option value="비" <%=rs2.getString("weather").equals("비") ?  "selected" : "" %>>비</option>
-						<option value="눈" <%=rs2.getString("weather").equals("눈") ?  "selected" : "" %>>눈</option>
-					</select>
+				<div class="d-flex" >
+					<div class="p-2 flex-fill">
+						<label>날씨 : </label>
+						<select name="weather" ">
+							<option value="맑음" <%=rs2.getString("weather").equals("맑음") ?  "selected" : "" %>>맑음</option>
+							<option value="흐림" <%=rs2.getString("weather").equals("흐림") ?  "selected" : "" %>>흐림</option>
+							<option value="비" <%=rs2.getString("weather").equals("비") ?  "selected" : "" %>>비</option>
+							<option value="눈" <%=rs2.getString("weather").equals("눈") ?  "selected" : "" %>>눈</option>
+						</select>
+					</div>
+					<div class="p-2 flex-fill" id="emotion">
+						<label>감정 : </label>    
+						<input type="radio"  value="&#128538" <%=rs2.getString("feeling").equals("&#128538") ? "checked" : "" %> name="emojis" class="inputType">&#128538
+						<input type="radio"  value="&#128545" <%=rs2.getString("feeling").equals("😡") ? "checked" : "" %> name="emojis"  class="inputType">&#128545
+						<input type="radio"  value="&#128557" <%=rs2.getString("feeling").equals("😭") ? "checked" : "" %> name="emojis"  class="inputType">&#128557
+						<input type="radio"  value="&#128529" <%=rs2.getString("feeling").equals("😑") ? "checked" : "" %> name="emojis" class="inputType">&#128529
+					</div>
 				</div>
+			
 				<div class="mb-2 d-flex justify-content-between" >
 					<label class="">내용 : </label>
 					<textarea rows="7" cols="63" name="content" ><%=rs2.getString("content") %></textarea>
 				</div>
 				<div  class="d-flex justify-content-center ">
 					<button type="submit" class="mt-1 btn btn-outline-dark"  id="writingDiaryBtn">수정</button>
-					<button type="submit" class="mt-1 btn btn-outline-dark"  id="backDiaryBtn"><a href="./diaryOne.jsp?diaryDate= <%=diaryDate %>" id="backDiaryAtag">뒤로가기 </a></button>
+					<a href="./diaryOne.jsp?diaryDate= <%=diaryDate %>" id="backDiaryAtag" class="btn btn-outline-dark">뒤로가기 </a>
 				</div>
 			</form>
 		<%

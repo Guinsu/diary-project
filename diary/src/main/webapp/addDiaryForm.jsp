@@ -139,9 +139,16 @@
 			height: 50px;
 			margin-left: 90px;
 		}#backDiaryAtag{
-			margin-right :0px;
+			margin-left :50px;
+			margin-top: 4px;
+			width: 325px;
+			height: 50px;
 			padding-right:50px;
 			padding-left: 50px;
+			border: 1px solid black;
+			border-radius: 5px;
+			text-align: center;
+			font-size: 30px;
 		}
 		#yo{
 			width: 650px;
@@ -248,7 +255,7 @@
 			</div>
 			<div  class="d-flex justify-content-center ">
 				<button type="submit" class="mt-1 btn btn-outline-dark"  id="writingDiaryBtn">입력</button>
-				<button type="submit" class="mt-1 btn btn-outline-dark"  id="backDiaryBtn"><a href="./diary.jsp" id="backDiaryAtag">뒤로가기 </a></button>
+				<a href="./diary.jsp" id="backDiaryAtag"  class="btn btn-outline-dark">뒤로가기 </a>
 			</div>
 		</form>
 	</main>
