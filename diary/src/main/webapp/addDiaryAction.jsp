@@ -34,9 +34,7 @@
 	stmt.setString(4, weather);
 	stmt.setString(5, content);
 	
-	int row = 0;
-	
-	 row = stmt.executeUpdate();
+	int row = stmt.executeUpdate();
 	 
 	 if(row > 0){
 		 response.sendRedirect("./diary.jsp");

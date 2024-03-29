@@ -3,7 +3,7 @@
 <%@ page import="java.net.URLEncoder"%>
 
 <%
-//session 로그인 여부 확인
+	//session 로그인 여부 확인
 	String loginMember = (String)(session.getAttribute("loginMember"));
 	if(loginMember == null){
 		String errMsg =  URLEncoder.encode("잘못된 접근 입니다. 로그인 먼저 해주세요.", "utf-8");

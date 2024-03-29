@@ -8,7 +8,6 @@
 		String errMsg =  URLEncoder.encode("잘못된 접근 입니다. 로그인 먼저 해주세요.", "utf-8");
 		response.sendRedirect("/diary/loginForm.jsp?errMsg=" +errMsg);
 	}
-		
 
 	String diaryDate = request.getParameter("diaryDate");
 	
@@ -66,14 +65,28 @@
 		}
 		button{
 			padding: 0px;
-			margin-right: 20px;
+			margin-right: 20px;	
 		}
 		#contents{
 			padding: 20px;
 			width: 1000px;
 			border: 1px solid black;
 		}
-		
+		#commentDiv{
+			max-height: 400px;
+			width : 100%;
+			overflow-y: auto;
+		}
+		#commentBtn{
+			font-size: 30px;
+		}
+		#commentMaxDiv{
+			max-width: 500px;
+			 word-break: break-all;
+		}
+		#createDate{
+			font-size: 30px;
+		}
 		
 	</style>
 </head>
@@ -82,7 +95,9 @@
 		<h1>오늘의 일기</h1>
 	</header>
 	
-	<main class="d-flex flex-column justify-content-center align-items-center" >
+	<main class="d-flex justify-content-center" >
+	
+		<!-- 일기 상세 DIV -->
 		<div id="contents" class="rounded-4">
 			<%
 				if(rs2.next()){
@@ -121,6 +136,46 @@
 						<a href="./diaryList.jsp">게시판으로</a>
 					</button >
 				</div>
+		</div>
+		
+		<!-- 댓글 DIV -->
+		<div class="ms-2 d-flex flex-column justify-content-center align-items-center border border-black rounded-4" >
+			<div id="commentDiv">
+				<%
+					String sql3 = "SELECT comment_no commentNo,  diary_date diaryDate ,memo, create_date createDate FROM comment WHERE diary_date = ?";
+					PreparedStatement stmt3 = null;
+					ResultSet rs3 = null;
+					
+					stmt3 = conn.prepareStatement(sql3);
+					stmt3.setString(1, diaryDate);
+					rs3 = stmt3.executeQuery();
+				%>
+		
+				<%
+					while(rs3.next()){
+				%>
+					<div  class="d-flex">
+						<div class="p-2 flex-grow-1"  id="commentMaxDiv">
+							<%=rs3.getString("memo") %>
+						</div>
+						<div class="mt-3  p-2" id="createDate">
+							<%=rs3.getString("createDate") %>
+							<a href="./deleteComment.jsp?commentNo=<%=rs3.getString("commentNo")%>&diaryDate=<%=rs3.getString("diaryDate")%>">삭제</a>
+						</div>
+					</div>
+					<hr>
+				<%	
+					}
+				%>
+			</div>
+			<!-- 댓글 추가 폼 -->
+			<div>
+				<form action="./addCommentAction.jsp"  method="post" class="d-flex justify-content-center">
+					<input type="hidden"  name="diaryDate" value=<%=diaryDate %>>
+					<textarea rows="2" cols="40" name="memo" class="ms-2 mb-2"></textarea>
+					<button type="submit"  id="commentBtn" class="mb-2">댓글 입력</button>
+				</form>
+			</div>
 		</div>
 	</main>
 </body>

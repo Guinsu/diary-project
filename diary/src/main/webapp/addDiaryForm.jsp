@@ -16,7 +16,11 @@
 		checkDate = "";
 	}
 	String ck = request.getParameter("ck");
+	
+	//디버깅
+	//System.out.println(checkDate);
 	//System.out.println(ck);
+	
 	if(ck == null){
 		ck="";
 	}

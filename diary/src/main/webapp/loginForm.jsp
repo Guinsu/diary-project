@@ -10,7 +10,7 @@
 	//session.getAttribute() 찾는 변수가 없으면 null 값을 반환한다.
 	
 	
-	System.out.println(loginMember + " <----session");
+	//System.out.println(loginMember + " <----session");
 	
 	if(loginMember != null){
 		response.sendRedirect("./diary.jsp");

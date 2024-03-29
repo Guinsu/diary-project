@@ -2,7 +2,6 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="java.net.URLEncoder"%>
 <%
-
 	//session 로그인 여부 확인
 	String loginMember = (String)(session.getAttribute("loginMember"));
 	if(loginMember == null){
@@ -10,28 +9,23 @@
 		response.sendRedirect("/diary/loginForm.jsp?errMsg=" +errMsg);
 	}
 	
-	String checkDate = request.getParameter("checkDate");
+	String diaryDate = request.getParameter("diaryDate");
+	String memo = request.getParameter("memo");
 	
-	//디버깅
-	//System.out.println(checkDate);
-	
-	// 결과가 있으면 이미 이 날짜에 일기가 있다 -> 입력 X 
-	String sql = "SELECT diary_date diaryDate FROM diary WHERE diary_date =? ";
-	
-	PreparedStatement stmt = null;
-	ResultSet rs = null;
+	String sql = "INSERT INTO comment (diary_date, memo, update_date, create_date) VALUES (?,?,NOW(),NOW())";
 	Connection conn = null;
 	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/diary", "root", "java1234");
+	PreparedStatement stmt = null;
 	stmt = conn.prepareStatement(sql);
-	stmt.setString(1, checkDate);
-	rs = stmt.executeQuery();
+	stmt.setString(1, diaryDate);
+	stmt.setString(2, memo);
 	
-	if(rs.next()){
-		// 이날짜 일기 기록 불가능(이미존재)
-		response.sendRedirect("/diary/addDiaryForm.jsp?checkDate=" + checkDate+"&ck=F");
+	int row = stmt.executeUpdate();
+	
+	if(row > 0){
+		response.sendRedirect("./diaryOne.jsp?diaryDate="+diaryDate);
 	}else{
-		// 이날짜 일기 기록 가능
-		response.sendRedirect("/diary/addDiaryForm.jsp?checkDate=" + checkDate+"&ck=T");
+		response.sendRedirect("./diaryOne.jsp?diaryDate="+diaryDate);
 	}
 	
 %>

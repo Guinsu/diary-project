@@ -4,6 +4,7 @@
 <%@ page import="java.util.Calendar"%>
 
 <%
+	//session 로그인 여부 확인
 	String loginMember = (String)(session.getAttribute("loginMember"));
 	if(loginMember == null){
 		String errMsg =  URLEncoder.encode("잘못된 접근 입니다. 로그인 먼저 해주세요.", "utf-8");
@@ -237,7 +238,6 @@
 							<%
 								//현재 날짜 (d-preBlank)의 일기가 rs2 목록에 있는지 비교 
 									while(rs2.next()){
-										// 날짜에 일기가 존재한다.
 										if(rs2.getInt("day") == ( d-preBlank)){
 							%>
 											<div id="titleDiv d-flex justify-content-center">

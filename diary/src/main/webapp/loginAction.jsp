@@ -2,8 +2,6 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="java.net.URLEncoder"%>
 <%
-
-
 	// 로그인 유지 구현을 DB -> 세션으로 변경
 	// 로그인 성공시 세션에 loginMember 라는 변수를 만들고 로그인 아이디를 저장
 	String loginMember = (String )session.getAttribute("loginmenber");

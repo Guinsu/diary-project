@@ -165,6 +165,7 @@
 		#selectMenuBtn{
 			margin-top:  20px;
 			margin-bottom: 20px;
+			margin-left: 5px;
 		}
 		#menuDiv{
 			margin-top: 30px;
@@ -262,6 +263,7 @@
 						<input type="hidden" name= "selectedMenu" value="<%=rs2.getString("menu")%>"> <%=rs2.getString("menu")%>
 						<input type="hidden" name= "checkedDate" value="<%=checkDate%>">
 						<button type="submit" id="selectMenuBtn" class="ms-3">삭제하기</button>
+						<a href="./updateLunchForm.jsp?checkDate=<%=checkDate %>&menu=<%=rs2.getString("menu") %>"  id="viewStatistics" >수정하기</a>
 					</div>
 				</form>							
 		<%
