@@ -4,7 +4,19 @@
 <%
 
 
-	// 1. 요청 값 분석
+	// 로그인 유지 구현을 DB -> 세션으로 변경
+	// 로그인 성공시 세션에 loginMember 라는 변수를 만들고 로그인 아이디를 저장
+	String loginMember = (String )session.getAttribute("loginmenber");
+	System.out.println(loginMember + " <----session");
+	
+	if(loginMember != null){
+		response.sendRedirect("./diary.jsp");
+		return;
+	}
+
+	// loginMember가 null 이다 -> session 공간에 loginMember 변수를 생성
+
+	// 1. 요청 값 분석 -> 로그인 성공 유무 확인 후 -> 성공하면 session에 loginMember변수를 생성
 	String memberId = request.getParameter("memberId");
 	String memberPw = request.getParameter("memberPw");
 	
@@ -22,17 +34,10 @@
 	
 	
 	
-	if(rs2.next()){
-		//로그인 성공
-		// diary.login. my_session => "ON" 변경
-		String sql3 = "UPDATE login SET my_session = ?, on_date = NOW() WHERE no = 1";
-		PreparedStatement stmt3 = null;
-		stmt3 = conn.prepareStatement(sql3);
-		stmt3.setString(1, "ON");
-		stmt3.executeUpdate();
-		
-		stmt3.close();
-		//System.out.println("로그인성공");			
+	if(rs2.next()){ 
+		//로그인 성공시 DB 값 설정 -> session 변수 설정
+		session.setAttribute("loginMember", rs2.getString("memberId"));
+		response.sendRedirect("/diary/diary.jsp");	
 		
 	}else{
 		// 로그인 실패
@@ -41,40 +46,4 @@
 	}
 
 
-
-	//0. 로그인(인증)) 분기
-	//diary.login.my_session => 'ON' => redirect("diary.jsp")
-	
-	String sql1 = "SELECT my_session mySession FROM login";
-	PreparedStatement stmt1 = null;
-	ResultSet rs1 = null;
-	
-	stmt1 =	conn.prepareStatement(sql1);
-	rs1 = stmt1.executeQuery();
-	
-	String mySession = null;
-	
-	if(rs1.next()){
-		mySession = rs1.getString("mySession");
-	}
-	
-	if(mySession.equals("ON")){
-		response.sendRedirect("/diary/diary.jsp?mySession="+mySession);
-	
-		// 자원 반납
-		rs1.close();
-		stmt1.close();
-		conn.close();	
-
-		return; // 코드 진행을 끝내는 문법 ex) 메서드 끝낼 때 return 사용
-	}
-	
-	
-	stmt1.close();
-	rs1.close();
-	
-	stmt2.close();
-	rs2.close();
-	
-	conn.close();
 %>

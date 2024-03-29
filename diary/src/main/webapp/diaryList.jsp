@@ -3,37 +3,14 @@
 <%@ page import="java.net.URLEncoder"%>
 
 <%
-	String sql1 = "SELECT my_session mySession FROM login";
-	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = null;
-	PreparedStatement stmt1 = null;
-	ResultSet rs1 = null;
-	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/diary", "root", "java1234");
-	stmt1 =	conn.prepareStatement(sql1);
-	rs1 = stmt1.executeQuery();
-	
-	String mySession = request.getParameter("mySession");
-	
-	if(rs1.next()){
-		mySession = rs1.getString("mySession");
-	}
-	
-	if(mySession.equals("OFF")){
+	//session 로그인 여부 확인
+	String loginMember = (String)(session.getAttribute("loginMember"));
+	if(loginMember == null){
 		String errMsg =  URLEncoder.encode("잘못된 접근 입니다. 로그인 먼저 해주세요.", "utf-8");
 		response.sendRedirect("/diary/loginForm.jsp?errMsg=" +errMsg);
-	
-		// 자원 반납
-		rs1.close();
-		stmt1.close();
-		conn.close();
-	
-		return; // 코드 진행을 끝내는 문법 ex) 메서드 끝낼 때 return 사용
 	}
 
-%>
-
-<%
-	// 출력리스트 모듈
+	// 게시판 형식으로 다이어리 내용 출력리스트 모듈
 	int currentPage = 1;
 	if(request.getParameter("currentPage") != null ){
 		currentPage = Integer.parseInt(request.getParameter("currentPage"));
@@ -49,6 +26,8 @@
 	}
 	
 	String sql2 = "SELECT diary_date diaryDate, title FROM diary WHERE title LIKE ? ORDER BY diary_date DESC LIMIT ?,?";
+	Connection conn = null;
+	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/diary", "root", "java1234");
 	PreparedStatement stmt2 = null;
 	ResultSet rs2 = null;
 	stmt2 =	conn.prepareStatement(sql2);
@@ -76,6 +55,7 @@
 		lastPage = lastPage +1 ;
 	}
 	
+	//디버깅
 	//System.out.println(currentPage + " <----currentPage ");
 	//System.out.println(totalRow + " <----totalRow ");
 	//System.out.println(lastPage + " <----lastPage ");

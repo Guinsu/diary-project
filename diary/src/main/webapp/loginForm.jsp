@@ -1,38 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
-<%@ page import="java.sql.*" %>
 <%
-	//0. 로그인(인증)) 분기
-	//diary.login.my_session => 'ON' => redirect("diary.jsp")
+	// 로그인 유지 구현을 DB -> 세션으로 변경
+	// 로그인 성공시 세션에 loginMember 라는 변수를 만들고 로그인 아이디를 저장
+	String loginMember = (String )session.getAttribute("loginmenber");
+	// 사용되는 Session API
+	// session.getAttribute(String) : 변수 이름으로 변수 값을 반환하는 메서드
+	// session.getAttribute()는 찾는 변수가 없으면 null 값을 반환한다.
+	// null 이면 로그아웃 상태이고, null이 아니면 로그인 상태
+	//session.getAttribute() 찾는 변수가 없으면 null 값을 반환한다.
 	
-	String sql1 = "SELECT my_session mySession FROM login";
-	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = null;
-	PreparedStatement stmt1 = null;
-	ResultSet rs1 = null;
-	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/diary", "root", "java1234");
-	stmt1 =	conn.prepareStatement(sql1);
-	rs1 = stmt1.executeQuery();
 	
-	String mySession = null;
+	System.out.println(loginMember + " <----session");
 	
-	if(rs1.next()){
-		mySession = rs1.getString("mySession");
+	if(loginMember != null){
+		response.sendRedirect("./diary.jsp");
+		return;
 	}
-	
-	if(mySession.equals("ON")){
-		response.sendRedirect("/diary/diary.jsp");
-	
-		// 자원 반납
-		rs1.close();
-		stmt1.close();
-		conn.close();
-	
-		return; // 코드 진행을 끝내는 문법 ex) 메서드 끝낼 때 return 사용
-	}
-	
-	rs1.close();
-	stmt1.close();
-	conn.close();
 	
 	// 1. 요청 값 분석
 	String errMsg = request.getParameter("errMsg");
@@ -55,8 +38,6 @@
 		body{
 			width:100%;
 			height:100%;
-			background-image: url("./1.png");
-		 	background-size: cover;
 		 	font-family: "Dongle", sans-serif;
   			font-size: 25px;
   			font-style: normal;

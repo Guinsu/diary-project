@@ -1,11 +1,20 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
+<%@ page import="java.net.URLEncoder"%>
 <%
+	//session 로그인 여부 확인
+	String loginMember = (String)(session.getAttribute("loginMember"));
+	if(loginMember == null){
+		String errMsg =  URLEncoder.encode("잘못된 접근 입니다. 로그인 먼저 해주세요.", "utf-8");
+		response.sendRedirect("/diary/loginForm.jsp?errMsg=" +errMsg);
+	}
+
 	String diaryDate =  request.getParameter("diaryDate");
 	String title = request.getParameter("title");
 	String weather =  request.getParameter("weather");
 	String content = request.getParameter("content");
 	String feeling = request.getParameter("emojis"); 
+	
 	//디버깅
 	//System.out.println(diaryDate);
 	//System.out.println(title);
