@@ -52,7 +52,7 @@
 	String sql2 = "SELECT day(diary_date) day, left(title,5) title, diary_date FROM diary WHERE YEAR(diary_date)=? AND MONTH(diary_date)=?";
 	Class.forName("org.mariadb.jdbc.Driver");
 	Connection conn = null;
-	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/diary", "root", "java1234");
+	conn = DriverManager.getConnection("jdbc:mariadb://13.124.239.48:3306/diary", "root", "1q2w3e4r!!");
 	PreparedStatement stmt2 = null;
 	ResultSet rs2 = null;
 	

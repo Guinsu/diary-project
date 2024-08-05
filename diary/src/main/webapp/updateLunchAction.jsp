@@ -14,7 +14,7 @@
 	
 	String sql = "UPDATE lunch SET  menu=?, update_date= NOW() WHERE lunch_date =?";
 	Connection conn = null;
-	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/diary", "root", "java1234");
+	conn = DriverManager.getConnection("jdbc:mariadb://13.124.239.48:3306/diary", "root", "1q2w3e4r!!");
 	PreparedStatement stmt = null;
 	ResultSet rs = null;
 	stmt = conn.prepareStatement(sql);

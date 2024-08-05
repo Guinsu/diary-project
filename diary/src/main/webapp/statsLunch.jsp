@@ -13,7 +13,7 @@
 	// 메뉴 테이블에서 그룹화하고 각 메뉴가 몇 번 등장했는지 보여주는 쿼리문
 	String sql2 = "SELECT menu, COUNT(*) cnt  FROM lunch GROUP BY menu";
 	Connection conn = null;
-	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/diary", "root", "java1234");
+	conn = DriverManager.getConnection("jdbc:mariadb://13.124.239.48:3306/diary", "root", "1q2w3e4r!!");
 	PreparedStatement stmt2 = null;
 	ResultSet rs2 = null;
 	

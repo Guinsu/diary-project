@@ -14,7 +14,7 @@
 	
 	String sql2 = "DELETE FROM diary WHERE diary_date = ?";
 	Connection conn = null;
-	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/diary", "root", "java1234");
+	conn = DriverManager.getConnection("jdbc:mariadb://13.124.239.48:3306/diary", "root", "1q2w3e4r!!");
 	PreparedStatement stmt2 = null;
 	stmt2 =	conn.prepareStatement(sql2);
 	stmt2.setString(1, diaryDate);

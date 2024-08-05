@@ -18,7 +18,7 @@
 	PreparedStatement stmt2 = null;
 	ResultSet rs2 = null;
 	Connection conn = null;
-	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/diary", "root", "java1234");
+	conn = DriverManager.getConnection("jdbc:mariadb://13.124.239.48:3306/diary", "root", "1q2w3e4r!!");
 
 	stmt2 =	conn.prepareStatement(sql2);
 	stmt2.setString(1, checkDate);

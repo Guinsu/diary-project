@@ -14,7 +14,7 @@
 	
 	String sql = "INSERT INTO comment (diary_date, memo, update_date, create_date) VALUES (?,?,NOW(),NOW())";
 	Connection conn = null;
-	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/diary", "root", "java1234");
+	conn = DriverManager.getConnection("jdbc:mariadb://13.124.239.48:3306/diary", "root", "1q2w3e4r!!");
 	PreparedStatement stmt = null;
 	stmt = conn.prepareStatement(sql);
 	stmt.setString(1, diaryDate);
