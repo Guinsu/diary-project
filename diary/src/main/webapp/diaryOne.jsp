@@ -114,11 +114,6 @@
 					<hr>
 					 <div>내용 : <%=rs2.getString("content")%></div>
 				<hr>
-				<div  class='d-flex justify-content-between'>
-					<div>업데이트 날짜: <%=rs2.getString("update_date")%> </div>
-					<div>생성된 날짜 : <%=rs2.getString("create_date")%></div>
-				</div>
-				<hr>
 			<%	
 				}
 			%>
@@ -170,7 +165,7 @@
 			</div>
 			<!-- 댓글 추가 폼 -->
 			<div>
-				<form action="./addCommentAction.jsp"  method="post" class="d-flex justify-content-center">
+				<form name="commentForm" action="./addCommentAction.jsp"  method="post" class="d-flex justify-content-center" onsubmit="return validateCommentForm()">
 					<input type="hidden"  name="diaryDate" value=<%=diaryDate %>>
 					<textarea rows="2" cols="40" name="memo" class="ms-2 mb-2"></textarea>
 					<button type="submit"  id="commentBtn" class="mb-2">입력</button>
@@ -178,5 +173,15 @@
 			</div>
 		</div>
 	</main>
+	<script>
+		function validateCommentForm() {
+			let memo = document.forms["commentForm"]["memo"].value;
+			if (memo.trim() == "") {
+				alert("댓글을 입력하세요.");
+				return false;
+			}
+			return true;
+		}
+	</script>
 </body>
 </html>

@@ -57,7 +57,7 @@
 	ResultSet rs2 = null;
 	
 	stmt2 = conn.prepareStatement(sql2);
-	stmt2.setInt(1,  year);
+	stmt2.setInt(1,  year); 
 	stmt2.setInt(2, month+1);
 	
 	//디버깅

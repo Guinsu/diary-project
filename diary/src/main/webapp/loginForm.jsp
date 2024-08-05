@@ -78,11 +78,11 @@
 			<h3>로그인이 필요 합니다 &#128204 </h3>
 			<div class="d-flex justify-content-between"  id="idDiv"> 
 				<label>아이디</label>
-				<input type="text" name="memberId" class="rounded-3">
+				<input type="text" name="memberId" class="rounded-3" value="admin">
 			</div>
 			<div class="d-flex justify-content-between" id="pwDiv">
 				<label>비밀번호</label>
-				<input type="password" name="memberPw"  class="rounded-3">
+				<input type="password" name="memberPw"  class="rounded-3" value="1234">
 			</div>
 			<div  class="loginBtnDiv">
 				<input type="submit" id="loginBtn"  value="로그인" class="btn btn-outline-danger  btn-lg">
