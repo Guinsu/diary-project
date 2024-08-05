@@ -173,7 +173,7 @@
 				<form action="./addCommentAction.jsp"  method="post" class="d-flex justify-content-center">
 					<input type="hidden"  name="diaryDate" value=<%=diaryDate %>>
 					<textarea rows="2" cols="40" name="memo" class="ms-2 mb-2"></textarea>
-					<button type="submit"  id="commentBtn" class="mb-2">댓글 입력</button>
+					<button type="submit"  id="commentBtn" class="mb-2">입력</button>
 				</form>
 			</div>
 		</div>

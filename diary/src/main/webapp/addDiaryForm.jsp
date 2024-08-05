@@ -189,7 +189,7 @@
 	</aside>
 	
 	<main>
-		<form action="/diary/addDiaryAction.jsp" method="post">
+		<form name="diaryForm" action="/diary/addDiaryAction.jsp" method="post" onsubmit="return validateForm()">
 			<div class="mb-2 d-flex justify-content-between"  >
 				<label>날짜  : </label>
 					<%
@@ -221,10 +221,10 @@
 				</div>
 				<div class="p-2 flex-fill" id="emotion">
 					<label>감정 : </label>
-					<input type="radio"  value="&#128538" name="emojis" class="inputType">&#128538
-					<input type="radio" value="&#128545" name="emojis"  class="inputType">&#128545
-					<input type="radio"  value="&#128557" name="emojis"  class="inputType">&#128557
-					<input type="radio"  value="&#128529" name="emojis" class="inputType">&#128529
+					<input type="radio"  value="&#128538" name="emojis" class="inputType" required>&#128538
+					<input type="radio" value="&#128545" name="emojis"  class="inputType" required>&#128545
+					<input type="radio"  value="&#128557" name="emojis"  class="inputType" required>&#128557
+					<input type="radio"  value="&#128529" name="emojis" class="inputType" required>&#128529
 				</div>
 			</div>
 			<div class="mb-2 d-flex justify-content-between" >
@@ -237,5 +237,41 @@
 			</div>
 		</form>
 	</main>
+	<script>
+		function validateForm() {
+			let diaryDate = document.forms["diaryForm"]["diaryDate"].value;
+			let title = document.forms["diaryForm"]["title"].value;
+			let content = document.forms["diaryForm"]["content"].value;
+			let emotions = document.forms["diaryForm"]["emojis"];
+			let emotionChecked = false;
+			
+			if (diaryDate == "") {
+				alert("날짜를 입력하세요.");
+				return false;
+			}
+			if (title == "") {
+				alert("제목을 입력하세요.");
+				return false;
+			}
+			if (content == "") {
+				alert("내용을 입력하세요.");
+				return false;
+			}
+	
+			for (let i = 0; i < emotions.length; i++) {
+				if (emotions[i].checked) {
+					emotionChecked = true;
+					break;
+				}
+			}
+	
+			if (!emotionChecked) {
+				alert("감정을 선택하세요.");
+				return false;
+			}
+			
+			return true;
+		}
+	</script>
 </body>
 </html>

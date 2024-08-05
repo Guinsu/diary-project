@@ -84,38 +84,39 @@
 		body{
 			width:100%;
 			height:100%;
-			//background-image: url("./1.png");
-		 	//background-size: cover;
 		 	font-family: "Dongle", sans-serif;
   			font-style: normal;
 		}
 		a{
 			text-decoration: none;
 			color: black;
-			font-size:25px;
-			margin-right: 10px;
+			font-size:20px;
 		}
 		h1{
 			color: black;
 			font-size: 100px;
 		}
 		h2{
-			font-size: 50px;
+			font-size: 30px;
 		}
 		tr{
 			text-align: center;
-			font-size: 25px;
-			height: 20px;
+			font-size: 22px;
 		}
 		td{
-			width:50px;
-			height: 30px;
+			width:100px;
+			height:87px;
+			
 		}
-		main{
-			height: 700px;
+
+		.days{
+			vertical-align : top;
 		}
-		table{
-			height: 550px;
+		
+		.titleDiv{
+			max-width: 100px;
+			max-height:20px;
+			
 		}
 		
 		#logoutBtn{
@@ -139,30 +140,24 @@
 			padding: 0px;
 			width: 100px;
 		}
-		#days{
-			vertical-align : top;
-		}
-		#writingDiaryBtn{
-			padding: 0px;
-			width: 1000px;
-			height: 60px;
-		}
 		#writingDiaryAtag{
 			margin-right :0px;
 			padding-right:450px;
 			padding-left: 450px;
 		}
-		#titleDiv{
-			width: 100px;
-			height:50px;
-		}
+		
 		#showList{
 			font-size: 40px;
 			padding: 10px;
 			width: 400px;
 		}
 		#diaryDiv{
-			height: 100%;;
+			height: 86%;
+			overflow: auto;
+		}
+		#makeDiaryA{
+			padding-right: 50px;
+			padding-left: 50px;
 		}
 		
 	</style>
@@ -204,13 +199,18 @@
 			<div class=" text-center">
 				<h2><%=year%>년 <%=month+1%>월</h2>
 			</div>		
-			<div class=" text-center">
-				<button  class="btn btn-outline-secondary"  id="previousMonth">
-					<a href="./diary.jsp?targetYear=<%=year%>&targetMonth=<%=month-1%>" class="p-1" >이전달</a>
-				</button>
-				<button  class="btn btn-outline-secondary" id="nextMonth" >
-					<a href="./diary.jsp?targetYear=<%=year%>&targetMonth=<%=month+1%>" class="p-1"  >다음달</a>
-				</button>
+			<div class=" text-center" style="display: flex; justify-content: space-between;">
+				<div>
+					<button  class="btn btn-outline-secondary"  id="previousMonth">
+						<a href="./diary.jsp?targetYear=<%=year%>&targetMonth=<%=month-1%>" class="p-1" >이전달</a>
+					</button>
+					<button  class="btn btn-outline-secondary" id="nextMonth" >
+						<a href="./diary.jsp?targetYear=<%=year%>&targetMonth=<%=month+1%>" class="p-1"  >다음달</a>
+					</button>
+				</div>
+				<div>
+					<button class="mt-1 btn  btn-outline-dark  border border-black border-2" style="width: 200px; margin-bottom: 10px;" ><a href="./addDiaryForm.jsp" id="makeDiaryA">일기 쓰기</a></button>
+				</div>
 			</div>
 			<table border="1" width="100%" class=" table-border">
 			<tr >
@@ -227,20 +227,19 @@
 				
 					for(int d=1; d<=totalTd; d++){
 				%>
-						<td  class="border border-black " id="days">
+						<td  class="border border-black days">
 							<% 
 								int t = d-preBlank;
 								if( t >= 1 && t <= lastDate) {
 							%>
 								<%=t%>
-								<br>
 								
 							<%
 								//현재 날짜 (d-preBlank)의 일기가 rs2 목록에 있는지 비교 
 									while(rs2.next()){
 										if(rs2.getInt("day") == ( d-preBlank)){
 							%>
-											<div id="titleDiv d-flex justify-content-center">
+											<div class="titleDiv d-flex justify-content-center">
 												<a href="/diary/diaryOne.jsp?diaryDate=<%=rs2.getString("diary_date")%>">											
 													<%=rs2.getString("title") %>.....
 												</a>
@@ -260,7 +259,8 @@
 				<%
 						if(d%7 == 0 && d < totalTd) {
 				%>
-							</tr><tr>
+							</tr>
+							<tr>
 				<%			
 							}
 					}
@@ -269,8 +269,5 @@
 			</table>
 		</div>
 	</main>
-	<div class="mt-3 d-flex justify-content-center " >
-		<button class="mt-1 btn  btn-outline-dark  border border-black border-2"  id="writingDiaryBtn"><a href="./addDiaryForm.jsp" id="writingDiaryAtag">일기 쓰기 </a> </button>
-	</div>
 </body>
 </html>

@@ -22,8 +22,9 @@
 	stmt2.setString(1, diaryDate);
 	rs2 = stmt2.executeQuery();
 	
+	
 	//디버깅
-	//System.out.println(stmt1);
+	System.out.println(rs2);
 	
 %>
 <!DOCTYPE html>
@@ -150,7 +151,7 @@
 		<%
 			if(rs2.next()){	
 		%>
-			<form action="/diary/updateDiaryAction.jsp" method="post">
+			<form name="diaryForm" action="/diary/updateDiaryAction.jsp" method="post" onsubmit="return validateForm()">
 				<div class="mb-2 d-flex justify-content-between"  >
 					<label>날짜  : </label>
 					<input type="text" value=" <%=diaryDate %>" readonly="readonly"  name="diaryDate" id="yo">
@@ -171,7 +172,7 @@
 					</div>
 					<div class="p-2 flex-fill" id="emotion">
 						<label>감정 : </label>    
-						<input type="radio"  value="&#128538" <%=rs2.getString("feeling").equals("&#128538") ? "checked" : "" %> name="emojis" class="inputType">&#128538
+						<input type="radio"  value="&#128538" <%=rs2.getString("feeling").equals("😚") ? "checked" : "" %> name="emojis" class="inputType">&#128538
 						<input type="radio"  value="&#128545" <%=rs2.getString("feeling").equals("😡") ? "checked" : "" %> name="emojis"  class="inputType">&#128545
 						<input type="radio"  value="&#128557" <%=rs2.getString("feeling").equals("😭") ? "checked" : "" %> name="emojis"  class="inputType">&#128557
 						<input type="radio"  value="&#128529" <%=rs2.getString("feeling").equals("😑") ? "checked" : "" %> name="emojis" class="inputType">&#128529
@@ -191,5 +192,41 @@
 			}
 		%>
 	</main>
+	<script>
+		function validateForm() {
+			let diaryDate = document.forms["diaryForm"]["diaryDate"].value;
+			let title = document.forms["diaryForm"]["title"].value;
+			let content = document.forms["diaryForm"]["content"].value;
+			let emotions = document.forms["diaryForm"]["emojis"];
+			let emotionChecked = false;
+			
+			if (diaryDate == "") {
+				alert("날짜를 입력하세요.");
+				return false;
+			}
+			if (title == "") {
+				alert("제목을 입력하세요.");
+				return false;
+			}
+			if (content == "") {
+				alert("내용을 입력하세요.");
+				return false;
+			}
+	
+			for (let i = 0; i < emotions.length; i++) {
+				if (emotions[i].checked) {
+					emotionChecked = true;
+					break;
+				}
+			}
+	
+			if (!emotionChecked) {
+				alert("감정을 선택하세요.");
+				return false;
+			}
+			
+			return true;
+		}
+	</script>
 </body>
 </html>
