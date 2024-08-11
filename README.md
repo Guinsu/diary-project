@@ -27,5 +27,5 @@
 ## 3. 기술 스택
 - **프론트엔드**: HTML, CSS, JavaScript (JSP 사용)
 - **백엔드**: Java (JSP)
-- **데이터베이스**: MariaDB (SQL 파일로 관리)
+- **데이터베이스**: MariaDB
 - **기타 도구**: Git, Apache Tomcat, JDBC
